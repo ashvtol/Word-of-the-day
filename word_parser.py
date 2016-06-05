@@ -85,11 +85,18 @@ def is_connected():
 
 x  = is_connected()
 if(x):
-    print('\n\n')
+	print(color.BOLD + color.RED)
+	print(" _______________________ AZ ________________________ ")
+	print("|                                                   |")
+	print("|         Created by Ashish on 05/06/16.            |")
+	print("|   Copyright © 2016 Ashish. All rights reserved.   |")
+	print("|___________________________________________________|") 
+	print(color.END)
+if(x):
     print("Internet : "+ color.GREEN + "connected" + color.END);
     print(color.BOLD + color.UNDERLINE + "Word of the day" + color.END)
     wod();
     load_and_store();
 else:
     print("Internet: " + color.RED +"disconnected" + color.END +"\n " + color.UNDERLINE + "Check connection and try again " + color.END);
-print(color.PURPLE + "------------------------------------------------------------------------------" + color.END)
+print(color.PURPLE + "------------------------------------------------------------------------------\n" + color.END)
