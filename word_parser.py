@@ -66,7 +66,7 @@ def load_and_store():
         with open('./word_log',"a") as f:
             f.write((word + " : " + meaning+"\n"));
         f.close();
-        print("Congrats! You learned a new word today.");
+        print("Congrats! You learned a new word today");
         print("To view recorded words open " + color.BOLD + "word_log\n" + color.END)
     
 ######################## Connection Status #######################
