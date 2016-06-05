@@ -26,3 +26,25 @@ If not, then just run
 
 ## Output
 <img src="https://github.com/ashvtol/Word-of-the-day/blob/master/img/screen.png" width="595px"></img>
+
+
+## To Run Direclty from Terminal
+```
+1. Navigate to the folder in the terminal.
+2. Create a file, for simplicity call it word.
+	using: touch word
+   Then write the following into it.
+3. vim touch
+4. #!/bin/bash
+5. cd /Users/YOUR_USER_NAME/_PATH_/wordoftheday
+6. python3 word_parser.py
+7. save it.
+8. Set the path in the bash_profile
+	cd ~/
+	vim ./bash_profile
+	export PATH=$PATH:/Users/YOUR_USER_NAME/_PATH_/wordoftheday
+9. save it.
+10. Reopen the terminal and type
+11. word
+12. BAM!
+```
