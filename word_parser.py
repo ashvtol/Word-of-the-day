@@ -18,7 +18,7 @@ class color:
    BOLD = '\033[1m'
    UNDERLINE = '\033[4m'
    END = '\033[0m'
-   I = '\e[3;4;33m'
+   I = '\t\033[1m'
 
 ###################################################################
 ############################ Word of the day ######################
@@ -30,11 +30,12 @@ def wod():
     word = word.capitalize();
     meaning = str(raw_feed.entries[0]['summary_detail'].value)
     localtime = time.asctime( time.localtime(time.time()))
-    print(color.PURPLE + "------------------------------------------------\n" + color.END)
+    print(color.PURPLE + "------------------------------------------------------------------------------\n" + color.END)
     print(localtime)
-    print(color.BOLD + word + color.END )
-    print(color.BOLD + "Meaning : " + color.RED +meaning+ color.END + "\n")
-
+    print(color.BOLD + "Word    : "  + color.YELLOW + word + color.END )
+    print(color.BOLD + "Meaning : " + color.RED +meaning+ color.END)
+    page = str(raw_feed.entries[0]['link'])
+    print(color.BOLD + "Usage   : " + color.END + color.UNDERLINE + page + color.END + " (use ⌘ + doubleclick to open)\n")
 
 ####################################################################
 ############################## Store Word ##########################
@@ -61,11 +62,12 @@ def load_and_store():
         wlog[word]
         #print(wlog[word])
     except KeyError:
-        print(color.BOLD + "\nNew word" + color.END);
+        print(color.BOLD + "\nNew word " + color.END + color.RED+ "recorded" + color.END);
         with open('./word_log',"a") as f:
             f.write((word + " : " + meaning+"\n"));
         f.close();
         print("Congrats! You learned a new word today.");
+        print("To view recorded words open " + color.BOLD + "word_log\n" + color.END)
     
 
 ######################## Connection Status #######################
@@ -91,3 +93,4 @@ if(x):
     load_and_store();
 else:
     print("Internet: " + color.RED +"disconnected" + color.END +"\n " + color.UNDERLINE + "Check connection and try again " + color.END);
+print(color.PURPLE + "------------------------------------------------------------------------------" + color.END)
