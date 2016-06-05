@@ -69,7 +69,6 @@ def load_and_store():
         print("Congrats! You learned a new word today.");
         print("To view recorded words open " + color.BOLD + "word_log\n" + color.END)
     
-
 ######################## Connection Status #######################
 def is_connected():
   try:
