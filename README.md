@@ -1,4 +1,4 @@
-# Word-of-the-dat
+# Word-of-the-day
 Get word of the day from wordsmith.org directly into your terminal
 
 
