@@ -24,5 +24,5 @@ If not, then just run
 1. python3 word_parser.py
 ```
 
-## OUTPUT
+## Output
 <img src="https://github.com/ashvtol/Word-of-the-day/blob/master/img/screen.png" width="595px"></img>
