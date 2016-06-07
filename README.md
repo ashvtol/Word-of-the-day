@@ -42,7 +42,8 @@ If not, then just run
 4. #!/bin/bash
 5. cd /Users/YOUR_USER_NAME/_PATH_/wordoftheday
 6. python3 word_parser.py
-7. save it.
+7. save it and then make it executable:
+	chmod u+x word	
 8. Set the path in the bash_profile
 	cd ~/
 	vim ./bash_profile
