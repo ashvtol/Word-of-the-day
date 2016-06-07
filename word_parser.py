@@ -64,12 +64,14 @@ def load_and_store():
         wlog[word]
         #print(wlog[word])
     except KeyError:
-        print(color.BOLD + "\nNew word " + color.END + color.RED+ "recorded" + color.END);
+        print(color.BOLD + "New word " + color.END + color.RED+ "recorded" + color.END);
         with open('./word_log',"a") as f:
             f.write((word + " : " + meaning+"\n"));
         f.close();
         print("Congrats! You learned a new word today");
         print("To view recorded words open " + color.BOLD + "word_log\n" + color.END)
+        print("Or run this program with an argument for ex.\n" + color.BOLD + "python3 word_parser.py 6" + color.END)
+        print( "Here "+ color.BOLD + "6 " + color.END + "is the number of past recorded words.")
 
 
 
@@ -109,7 +111,6 @@ if(x):
     print("Internet : "+ color.GREEN + "connected" + color.END);
     print(color.BOLD + color.UNDERLINE + "Word of the day" + color.END)
     wod();
-    load_and_store();
     try:
     	previous_stat = sys.argv[1];
     except IndexError:
@@ -117,6 +118,7 @@ if(x):
 
     if(previous_stat != 0):
     	pword(previous_stat);
+    load_and_store();
 else:
     print("Internet: " + color.RED +"disconnected" + color.END +"\n " + color.UNDERLINE + "Check connection and try again " + color.END);
 print(color.PURPLE + "------------------------------------------------------------------------------\n" + color.END)
