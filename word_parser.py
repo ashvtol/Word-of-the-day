@@ -54,10 +54,8 @@ def wod():
     word = str(raw_feed.entries[0]['title'])
     word = word.capitalize();
     meaning = str(raw_feed.entries[0]['summary_detail'].value)
-    localtime = time.asctime( time.localtime(time.time()))
     print(color.PURPLE + "------------------------------------------------------------------------------" + color.END)
     print(color.BOLD + color.UNDERLINE + "Word of the day\n" + color.END)
-    print(localtime)
     print(color.BOLD + "Word    : "  + color.YELLOW + word + color.END )
     print(color.BOLD + "Meaning : " + color.RED +meaning+ color.END)
     page = str(raw_feed.entries[0]['link'])
@@ -134,6 +132,9 @@ if(x):
 	print(color.END)
 if(x):
     print("Internet : "+ color.GREEN + "connected" + color.END);
+    localtime = time.asctime( time.localtime(time.time()));
+    print("Today : ",end = '');
+    print(color.BOLD + localtime + color.END);
     wod();
     try:
     	previous_stat = sys.argv[1];
