@@ -1,7 +1,10 @@
 import feedparser
+import subprocess
 import time
 import socket
 import sys
+
+previous_stat = 0;
 
 word = "";
 meaning = "";
@@ -18,7 +21,6 @@ class color:
    BOLD = '\033[1m'
    UNDERLINE = '\033[4m'
    END = '\033[0m'
-   I = '\t\033[1m'
 
 ###################################################################
 ############################ Word of the day ######################
@@ -68,6 +70,17 @@ def load_and_store():
         f.close();
         print("Congrats! You learned a new word today");
         print("To view recorded words open " + color.BOLD + "word_log\n" + color.END)
+
+
+
+##################################################################
+########################### Previous Word ########################
+def pword(index):
+	
+	print("Previous "+ color.RED + color.BOLD + index + color.END +" Words" + color.BOLD);
+	p  = subprocess.Popen('tail -' + index + ' word_log', stdout=subprocess.PIPE, shell=True)
+	print(p.stdout.read().decode() + color.END)
+
     
 ######################## Connection Status #######################
 def is_connected():
@@ -97,6 +110,13 @@ if(x):
     print(color.BOLD + color.UNDERLINE + "Word of the day" + color.END)
     wod();
     load_and_store();
+    try:
+    	previous_stat = sys.argv[1];
+    except IndexError:
+    	previous_stat = 0;
+
+    if(previous_stat != 0):
+    	pword(previous_stat);
 else:
     print("Internet: " + color.RED +"disconnected" + color.END +"\n " + color.UNDERLINE + "Check connection and try again " + color.END);
 print(color.PURPLE + "------------------------------------------------------------------------------\n" + color.END)

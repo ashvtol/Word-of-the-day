@@ -22,6 +22,10 @@ To get the feedparser module
 
 If not, then just run
 1. python3 word_parser.py
+2. To get the past recorded words 
+	python3 word_parser some_integer
+   Here some_integer refers to the number of recorded words you want to
+   display.
 ```
 
 ## Output
