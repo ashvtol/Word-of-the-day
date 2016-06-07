@@ -1,5 +1,6 @@
 # Word-of-the-day
-Get word of the day from wordsmith.org directly into your terminal
+Get "Word of the day" from wordsmith.org directly into your terminal.
+Also, the "Thought for the day" from brainyquote.com is now included. 
 
 
 ### Dependencies

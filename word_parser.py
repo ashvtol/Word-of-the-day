@@ -1,6 +1,8 @@
 import feedparser
 import subprocess
+import math
 import time
+import random
 import socket
 import sys
 
@@ -9,7 +11,7 @@ previous_stat = 0;
 word = "";
 meaning = "";
 REMOTE_SERVER = "www.google.com"
-
+thought = "";
 class color:
    PURPLE = '\033[95m'
    CYAN = '\033[96m'
@@ -23,6 +25,27 @@ class color:
    END = '\033[0m'
 
 ###################################################################
+########################## Thought for the day ####################
+def tof():
+  print(color.GREEN +"------------------------------------------------------------------------------"+ color.END)
+  global thought;
+  print(color.UNDERLINE + color.BOLD +"Thought for the day\n" + color.END)
+  raw_thought = feedparser.parse("http://feeds.feedburner.com/brainyquote/QUOTEBR")
+  #print(raw_thought);
+  iterator = random.randrange(0,4,2);
+  author  = str(raw_thought.entries[iterator]['title'])
+  thought = str(raw_thought.entries[iterator]['summary_detail'].value)
+  length = (len(thought))
+  #print(length)
+  if(length > 90):
+    length = length%90;
+  tabs = math.ceil(length/9);
+  print(color.BOLD+thought+color.END);
+  for i in range(1,tabs):
+    print("\t",end='');
+  print("~ " + color.YELLOW +author + color.END)
+  print(color.GREEN +"______________________________________________________________________________\n\n"+ color.END)
+###################################################################
 ############################ Word of the day ######################
 def wod():
     global word;
@@ -32,12 +55,15 @@ def wod():
     word = word.capitalize();
     meaning = str(raw_feed.entries[0]['summary_detail'].value)
     localtime = time.asctime( time.localtime(time.time()))
-    print(color.PURPLE + "------------------------------------------------------------------------------\n" + color.END)
+    print(color.PURPLE + "------------------------------------------------------------------------------" + color.END)
+    print(color.BOLD + color.UNDERLINE + "Word of the day\n" + color.END)
     print(localtime)
     print(color.BOLD + "Word    : "  + color.YELLOW + word + color.END )
     print(color.BOLD + "Meaning : " + color.RED +meaning+ color.END)
     page = str(raw_feed.entries[0]['link'])
     print(color.BOLD + "Usage   : " + color.END + color.UNDERLINE + page + color.END + " (use ⌘ + doubleclick to open)\n")
+    #print(color.PURPLE + "------------------------------------------------------------------------------" + color.END)
+    
 
 ####################################################################
 ############################## Store Word ##########################
@@ -59,7 +85,6 @@ def load_and_store():
     
     ###############
     #Remap Process
-
     try:
         wlog[word]
         #print(wlog[word])
@@ -72,7 +97,7 @@ def load_and_store():
         print("To view recorded words open " + color.BOLD + "word_log\n" + color.END)
         print("Or run this program with an argument for ex.\n" + color.BOLD + "python3 word_parser.py 6" + color.END)
         print( "Here "+ color.BOLD + "6 " + color.END + "is the number of past recorded words.")
-
+    print(color.PURPLE + "______________________________________________________________________________" + color.END)
 
 
 ##################################################################
@@ -109,7 +134,6 @@ if(x):
 	print(color.END)
 if(x):
     print("Internet : "+ color.GREEN + "connected" + color.END);
-    print(color.BOLD + color.UNDERLINE + "Word of the day" + color.END)
     wod();
     try:
     	previous_stat = sys.argv[1];
@@ -119,6 +143,8 @@ if(x):
     if(previous_stat != 0):
     	pword(previous_stat);
     load_and_store();
+    tof();
+    
 else:
     print("Internet: " + color.RED +"disconnected" + color.END +"\n " + color.UNDERLINE + "Check connection and try again " + color.END);
-print(color.PURPLE + "------------------------------------------------------------------------------\n" + color.END)
+    print(color.PURPLE + "------------------------------------------------------------------------------\n" + color.END)
