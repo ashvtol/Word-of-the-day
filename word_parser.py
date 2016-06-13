@@ -54,10 +54,18 @@ def wod():
     word = str(raw_feed.entries[0]['title'])
     word = word.capitalize();
     meaning = str(raw_feed.entries[0]['summary_detail'].value)
+    length = len(meaning)
+
     print(color.PURPLE + "------------------------------------------------------------------------------" + color.END)
     print(color.BOLD + color.UNDERLINE + "Word of the day\n" + color.END)
     print(color.BOLD + "Word    : "  + color.YELLOW + word + color.END )
-    print(color.BOLD + "Meaning : " + color.RED +meaning+ color.END)
+    print(color.BOLD + "Meaning : " + color.RED ,end='')
+    for i in range(0,len(meaning)):
+      if(meaning[i]==';'):
+        print("\n         ",sep='',end='');
+      else:
+        print(meaning[i],sep='',end='')
+    print(color.END);
     page = str(raw_feed.entries[0]['link'])
     print(color.BOLD + "Usage   : " + color.END + color.UNDERLINE + page + color.END + " (use ⌘ + doubleclick to open)\n")
     #print(color.PURPLE + "------------------------------------------------------------------------------" + color.END)
