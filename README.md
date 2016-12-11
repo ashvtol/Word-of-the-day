@@ -19,10 +19,10 @@ To get the feedparser module
 3. If you don't have pip3 use this 
 
 ```
-``` 
+
 <a=href="https://bootstrap.pypa.io/get-pip.py">link</a=>  
 
-```
+
 ``` 
 to download get-pip.py
 4. Simply run python3 get-pip.py.
