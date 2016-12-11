@@ -16,7 +16,7 @@ To get the feedparser module
    make sure it gets installed for python3 and not any other
    version
 2. Or to install directly to python3 use pip3
-3. If you don't have pip3 use this <a=href="https://bootstrap.pypa.io/get-pip.py">link</a=> to download get-pip.py
+3. If you don't have pip3 use this ``` <a=href="https://bootstrap.pypa.io/get-pip.py">link</a=>  ``` to download get-pip.py
 4. Simply run python3 get-pip.py.
 
 ```
