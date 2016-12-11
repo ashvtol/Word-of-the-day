@@ -5,6 +5,8 @@ import time
 import random
 import socket
 import sys
+import requests
+from bs4 import BeautifulSoup
 
 previous_stat = 0;
 
@@ -12,6 +14,9 @@ word = "";
 meaning = "";
 REMOTE_SERVER = "www.google.com"
 thought = "";
+weektheme = ""
+word_mean = ""
+use = ""
 class color:
    PURPLE = '\033[95m'
    CYAN = '\033[96m'
@@ -29,6 +34,7 @@ class color:
 def tof():
   print(color.GREEN +"------------------------------------------------------------------------------"+ color.END)
   global thought;
+  
   print(color.UNDERLINE + color.BOLD +"Thought for the day\n" + color.END)
   raw_thought = feedparser.parse("http://feeds.feedburner.com/brainyquote/QUOTEBR")
   #print(raw_thought);
@@ -36,7 +42,6 @@ def tof():
   author  = str(raw_thought.entries[iterator]['title'])
   thought = str(raw_thought.entries[iterator]['summary_detail'].value)
   length = (len(thought))
-  #print(length)
   if(length > 90):
     length = length%90;
   tabs = math.ceil(length/9);
@@ -55,21 +60,110 @@ def wod():
     word = word.capitalize();
     meaning = str(raw_feed.entries[0]['summary_detail'].value)
     length = len(meaning)
+ 	######################################################################
+    ########################## This week's theme #########################
+    global weektheme;
+    link = "http://wordsmith.org/words/today.html";
+    html = requests.get(link).text;
+    soup = BeautifulSoup(html, 'lxml')
+    theme =  str(soup.get_text());
+    start = theme.find("This week’s theme")
+    i = start+18;
+    while(theme[i]!="\n"):
+  	  weektheme = weektheme+theme[i];i = i+1;
+    weektheme = weektheme + "\n";
+    print(weektheme);
+    # if(eme[start+17]=="\n"): 17 = "The week's theme"
+    # 	print("True\n");
+    #print(length)
+    #######################################################################
+    #######################################################################
+    #######################################################################
+    ################## Meaning ##############################################
+    global word_mean;
+    #link = "http://wordsmith.org/words/today.html";
+    #html = requests.get(link).text;
+    #soup = BeautifulSoup(html, 'lxml')
+    #eme =  str(soup.get_text());
+    #print(eme)
+    start = theme.find("MEANING:")
+    # if(eme[start+9]=="\n"):
+    # 	print("True\n");
+    i = start+10;
+    while(theme[i]!="\n"):
+    	word_mean = word_mean + theme[i];
+    	if(theme[i]=="\n"):
+    		#use  = use + "True";
+    		for z in range(1,11):
+    			word_mean = word_mean + " ";
+    	i = i+1;
+    word_mean = word_mean + "\n";
+    #print(word_mean);
+    ############################################# USAGE OF THE WORD ########
+    global use;
+    #link = "http://wordsmith.org/words/today.html";
+    #html = requests.get(link).text;
+    #soup = BeautifulSoup(html, 'lxml')
+    #eme =  str(soup.get_text());
+    #print(eme)
+    start = theme.find("USAGE:")
+    # if(eme[start+9]=="\n"):
+    # 	print("True\n");
+    i = start+8;
+    while(theme[i]!="”"):
+    	use = use + theme[i];
+    	if(theme[i]=="\n"):
+    		#use  = use + "True";
+    		for z in range(1,11):
+    			use = use + " ";
+    	i = i+1;
+    use = use + "”\n";
+    #print(word_mean);
+    #######################################################################
+    #######################################################################
+    #######################################################################
 
     print(color.PURPLE + "------------------------------------------------------------------------------" + color.END)
     print(color.BOLD + color.UNDERLINE + "Word of the day\n" + color.END)
+    print(color.BOLD + "Theme   : "  + color.YELLOW + weektheme + color.END ,end='')
     print(color.BOLD + "Word    : "  + color.YELLOW + word + color.END )
-    print(color.BOLD + "Meaning : " + color.RED ,end='')
-    for i in range(0,len(meaning)):
-      if(meaning[i]==';'):
-        print("\n         ",sep='',end='');
-      else:
-        print(meaning[i],sep='',end='')
-    print(color.END);
+    # print(color.BOLD + "Meaning : " + color.RED ,end='')
+    # for i in range(0,len(meaning)):
+    #   if(meaning[i]==';'):
+    #     print("\n         ",sep='',end='');
+    #   else:
+    #     print(meaning[i],sep='',end='')
+    # print(color.END);
     page = str(raw_feed.entries[0]['link'])
-    print(color.BOLD + "Usage   : " + color.END + color.UNDERLINE + page + color.END + " (use ⌘ + doubleclick to open)\n")
+    print(color.BOLD + "Meaning : " + color.END + color.RED + word_mean + color.END,end='')
+    print(color.BOLD + "Usage   : " + color.END + color.RED + use + color.END,end='')
+    print(color.BOLD + "Link    : " + color.END + color.UNDERLINE + page + color.END)
     #print(color.PURPLE + "------------------------------------------------------------------------------" + color.END)
-    
+
+# def theme():
+# 	 # uf = urllib.request.urlopen("http://wordsmith.org/words/today.html")
+# 	 # html = uf.read()
+# 	 # raw_feed = feedparser.parse("http://wordsmith.org/words/today.html")
+# 	 # theme = str(raw_feed);
+# 	 # print(html);
+#  global word_mean;
+#  link = "http://wordsmith.org/words/today.html";
+#  html = requests.get(link).text;
+#  soup = BeautifulSoup(html, 'lxml')
+#  eme =  str(soup.get_text());
+#  #print(eme)
+#  start = eme.find("MEANING:")
+#  # if(eme[start+9]=="\n"):
+#  # 	print("True\n");
+#  i = start+10;
+#  while(eme[i]!="\n"):
+#  	word_mean = word_mean + eme[i];
+#  	i = i+1;
+#  word_mean = word_mean + "\n";
+#  print(word_mean);
+# 	 # for i in range (start+18,start+17+20):
+# 	 # 	print(eme[i],end='');
+
 
 ####################################################################
 ############################## Store Word ##########################
@@ -130,6 +224,8 @@ def is_connected():
   return False
 
 x  = is_connected()
+# if(x):
+# 	theme();
 if(x):
 	print(color.BOLD + color.RED)
 	print(" _______________________ AZ ________________________ ")
