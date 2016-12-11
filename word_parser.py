@@ -5,6 +5,7 @@ import time
 import random
 import socket
 import sys
+import os
 import requests
 from bs4 import BeautifulSoup
 
@@ -17,6 +18,8 @@ thought = "";
 weektheme = ""
 word_mean = ""
 use = ""
+raw_thought = "";
+raw_feed = "";
 class color:
    PURPLE = '\033[95m'
    CYAN = '\033[96m'
@@ -34,9 +37,8 @@ class color:
 def tof():
   print(color.GREEN +"------------------------------------------------------------------------------"+ color.END)
   global thought;
-  
+  global raw_thought;
   print(color.UNDERLINE + color.BOLD +"Thought for the day\n" + color.END)
-  raw_thought = feedparser.parse("http://feeds.feedburner.com/brainyquote/QUOTEBR")
   #print(raw_thought);
   iterator = random.randrange(0,4,2);
   author  = str(raw_thought.entries[iterator]['title'])
@@ -55,7 +57,7 @@ def tof():
 def wod():
     global word;
     global meaning;
-    raw_feed = feedparser.parse("https://wordsmith.org/awad/rss1.xml")
+    global raw_feed;
     word = str(raw_feed.entries[0]['title'])
     word = word.capitalize();
     meaning = str(raw_feed.entries[0]['summary_detail'].value)
@@ -63,9 +65,6 @@ def wod():
  	######################################################################
     ########################## This week's theme #########################
     global weektheme;
-    link = "http://wordsmith.org/words/today.html";
-    html = requests.get(link).text;
-    soup = BeautifulSoup(html, 'lxml')
     theme =  str(soup.get_text());
     start = theme.find("This week’s theme")
     i = start+18;
@@ -136,7 +135,7 @@ def wod():
     # print(color.END);
     page = str(raw_feed.entries[0]['link'])
     print(color.BOLD + "Meaning : " + color.END + color.RED + word_mean + color.END,end='')
-    print(color.BOLD + "Usage   : " + color.END + color.RED + use + color.END,end='')
+    print(color.BOLD + "Usage   : " + color.END + use ,end='')
     print(color.BOLD + "Link    : " + color.END + color.UNDERLINE + page + color.END)
     #print(color.PURPLE + "------------------------------------------------------------------------------" + color.END)
 
@@ -211,17 +210,24 @@ def pword(index):
     
 ######################## Connection Status #######################
 def is_connected():
-  try:
-    # see if we can resolve the host name -- tells us if there is
-    # a DNS listening
-    host = socket.gethostbyname(REMOTE_SERVER)
-    # connect to the host -- tells us if the host is actually
-    # reachable
-    s = socket.create_connection((host, 80), 2)
-    return True
-  except:
-     pass
-  return False
+  # try:
+  #   # see if we can resolve the host name -- tells us if there is
+  #   # a DNS listening
+  #   host = socket.gethostbyname(REMOTE_SERVER)
+  #   # connect to the host -- tells us if the host is actually
+  #   # reachable
+  #   s = socket.create_connection((host, 80), 2)
+  #   return True
+  # except:
+  #    pass
+  # return False
+  hostname = "8.8.8.8"
+  response = os.system("ping -c 1 -t 1 " + hostname +  " > /dev/null");
+  if(response==0):
+  	return 1;
+  else:
+  	return 0;
+
 
 x  = is_connected()
 # if(x):
@@ -233,23 +239,28 @@ if(x):
 	print("|         Created by Ashish on 05/06/16.            |")
 	print("|   Copyright © 2016 Ashish. All rights reserved.   |")
 	print("|___________________________________________________|") 
-	print(color.END)
-if(x):
-    print("Internet : "+ color.GREEN + "connected" + color.END);
-    localtime = time.asctime( time.localtime(time.time()));
-    print("Today : ",end = '');
-    print(color.BOLD + localtime + color.END);
-    wod();
-    try:
-    	previous_stat = sys.argv[1];
-    except IndexError:
-    	previous_stat = 0;
+	print(color.END);
+	print("Internet : "+ color.GREEN + "connected" + color.END);
+	raw_feed = feedparser.parse("https://wordsmith.org/awad/rss1.xml");
+	raw_thought = feedparser.parse("http://feeds.feedburner.com/brainyquote/QUOTEBR");
+	link = "http://wordsmith.org/words/today.html";
+	html = requests.get(link).text;
+	soup = BeautifulSoup(html, 'lxml')
+	localtime = time.asctime( time.localtime(time.time()));
+	print("Today : ",end = '');
+	print(color.BOLD + localtime + color.END);
+	wod();
+	try:
+		previous_stat = sys.argv[1];
+	except IndexError:
+		previous_stat = 0;
 
-    if(previous_stat != 0):
-    	pword(previous_stat);
-    load_and_store();
-    tof();
-    
+	if(previous_stat != 0):
+		pword(previous_stat);
+		load_and_store();
+	tof();
+
 else:
-    print("Internet: " + color.RED +"disconnected" + color.END +"\n " + color.UNDERLINE + "Check connection and try again " + color.END);
-    print(color.PURPLE + "------------------------------------------------------------------------------\n" + color.END)
+	print("Internet: " + color.RED +"disconnected" + color.END +"\n " + color.UNDERLINE + "Check connection and try again " + color.END);
+	print(color.PURPLE + "------------------------------------------------------------------------------\n" + color.END)
+
