@@ -6,6 +6,8 @@ Also, the "Thought for the day" from brainyquote.com is now included.
 ### Dependencies
 1. Python 3.5 or greater
 2. feedparser module
+4. bs4
+5. BeautifulSoup4
 
 ```
 To get the feedparser module
@@ -13,6 +15,10 @@ To get the feedparser module
    If you don't have pip3 you can use pip as well but then 
    make sure it gets installed for python3 and not any other
    version
+2. Or to install directly to python3 use pip3
+3. If you don't have pip3 use this <a=href="https://bootstrap.pypa.io/get-pip.py">link</a=> to download get-pip.py
+4. Simply run python3 get-pip.py.
+
 ```
 ## Usage
 ```
